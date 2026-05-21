@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Авіцена Мед — Звіт агенції · Квітень 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F8F5; --surface: #FFFFFF; --border: #E4E6DF;
+    --text: #1A1C18; --muted: #6B6F64;
+    --accent: #1B6B4A; --accent-light: #E8F4EE;
+    --accent2: #2C5F8A; --accent2-light: #E6EFF7;
+    --warn: #A85A00; --warn-light: #FFF0E0;
+    --danger: #8B1A1A; --danger-light: #FDEAEA;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .header { background: var(--accent); color: white; padding: 48px 0 40px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+  .header-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 5vw, 40px); font-weight: 600; line-height: 1.2; margin-bottom: 6px; color: white; }
+  .header-sub { font-size: 14px; color: rgba(255,255,255,0.65); font-weight: 300; margin-bottom: 32px; }
+
+  .inputs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .inputs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+  .input-group { display: flex; flex-direction: column; gap: 5px; }
+  .input-group label { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 500; }
+  .input-group input { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: white; width: 100%; outline: none; transition: border-color 0.2s, background 0.2s; }
+  .input-group input:focus { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.18); }
+
+  section { padding: 52px 0; }
+  section + section { border-top: 1px solid var(--border); }
+  .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .section-desc { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+
+  .funnel { display: flex; flex-direction: column; }
+  .funnel-step { display: grid; grid-template-columns: 180px 1fr; align-items: stretch; opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s forwards; }
+  .funnel-step:nth-child(1) { animation-delay: 0.05s; }
+  .funnel-step:nth-child(2) { animation-delay: 0.12s; }
+  .funnel-step:nth-child(3) { animation-delay: 0.19s; }
+  .funnel-step:nth-child(4) { animation-delay: 0.26s; }
+  .funnel-step:nth-child(5) { animation-delay: 0.33s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  .funnel-left { background: var(--accent); color: white; padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; }
+  .funnel-step:nth-child(2) .funnel-left { background: #1F7A55; }
+  .funnel-step:nth-child(3) .funnel-left { background: #246040; }
+  .funnel-step:nth-child(4) .funnel-left { background: #1D5038; }
+  .funnel-step:nth-child(5) .funnel-left { background: #153D2A; }
+  .funnel-step-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .funnel-step-label { font-size: 13px; font-weight: 500; color: white; line-height: 1.3; }
+
+  .funnel-right { background: var(--surface); border: 1px solid var(--border); border-left: none; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .funnel-step:not(:last-child) .funnel-right { border-bottom: none; }
+  .funnel-step:not(:last-child) .funnel-left { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .funnel-step:first-child .funnel-left { border-radius: 10px 0 0 0; }
+  .funnel-step:first-child .funnel-right { border-radius: 0 10px 0 0; }
+  .funnel-step:last-child .funnel-left { border-radius: 0 0 0 10px; }
+  .funnel-step:last-child .funnel-right { border-radius: 0 0 10px 0; border-bottom: 1px solid var(--border); }
+
+  .funnel-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
+  .funnel-value-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .funnel-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+  .funnel-meta-item { text-align: right; }
+  .funnel-meta-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--text); }
+  .funnel-meta-lab { font-size: 11px; color: var(--muted); }
+
+  .funnel-arrow { text-align: center; padding: 6px 0; position: relative; }
+  .funnel-arrow::before { content: ''; position: absolute; left: 90px; top: 50%; transform: translateY(-50%); width: 1px; height: 100%; background: var(--border); }
+  .funnel-arrow-badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-left: 200px; }
+
+  .summary-block { background: var(--text); color: white; border-radius: 12px; padding: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .summary-block h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: white; margin-bottom: 16px; grid-column: 1 / -1; }
+  .summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row-label { color: rgba(255,255,255,0.55); }
+  .summary-row-val { font-weight: 500; color: white; font-family: 'DM Mono', monospace; font-size: 13px; }
+  .summary-row-val.accent { color: #6FCF97; }
+  .summary-row-val.warn { color: #F2994A; }
+  .summary-row-val.danger { color: #EB5757; }
+
+  .footer { background: var(--surface); border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-size: 12px; color: var(--muted); }
+  .footer strong { color: var(--text); }
+
+  @media (max-width: 600px) {
+    .summary-block { grid-template-columns: 1fr; }
+    .funnel-step { grid-template-columns: 130px 1fr; }
+    .funnel-arrow-badge { margin-left: 148px; }
+    .inputs-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="header-tag">Звіт агенції · Квітень 2026</div>
+    <h1>Авіцена Мед<br>Performance-маркетинг</h1>
+    <p class="header-sub">Змініть будь-яке поле — всі розрахунки оновляться автоматично</p>
+    <div class="inputs-label">Вхідні дані</div>
+    <div class="inputs-grid">
+      <div class="input-group">
+        <label>Бюджет Google Ads (₴)</label>
+        <input type="number" id="budgetPPC" value="33757">
+      </div>
+      <div class="input-group">
+        <label>Бюджет SEO (₴)</label>
+        <input type="number" id="budgetSEO" value="41000">
+      </div>
+      <div class="input-group">
+        <label>Послуги агенції PPC (₴)</label>
+        <input type="number" id="agencyPPC" value="24200">
+      </div>
+      <div class="input-group">
+        <label>Послуги агенції SEO (₴)</label>
+        <input type="number" id="agencySEO" value="35120">
+      </div>
+      <div class="input-group">
+        <label>К-сть конверсій</label>
+        <input type="number" id="conversions" value="145">
+      </div>
+      <div class="input-group">
+        <label>К-сть угод (продажів)</label>
+        <input type="number" id="deals" value="6">
+      </div>
+      <div class="input-group">
+        <label>Сума продажів (₴)</label>
+        <input type="number" id="revenue" value="630000">
+      </div>
+      <div class="input-group">
+        <label>Маржинальність (%)</label>
+        <input type="number" id="margin" value="30">
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">Google Ads + SEO · Квітень 2026</div>
+    <h2 class="section-title">Воронка рекламного трафіку</h2>
+    <p class="section-desc">Шлях від рекламного бюджету до фактичного продажу послуг клініки</p>
+    <div class="funnel">
+
+      <div class="funnel-step">
+        <div class="funnel-left">
+          <div class="funnel-step-num">01</div>
+          <div class="funnel-step-label">Рекламний бюджет</div>
+        </div>
+        <div class="funnel-right">
+          <div>
+            <div class="funnel-value" id="f-totalBudget"></div>
+            <div class="funnel-value-label" id="f-totalBudgetSub"></div>
+          </div>
+          <div class="funnel-meta">
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-ppc"></div>
+              <div class="funnel-meta-lab">Google Ads (PPC)</div>
+            </div>
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-seo"></div>
+              <div class="funnel-meta-lab">SEO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-arrow">
+        <span class="funnel-arrow-badge">↓ генерує конверсії</span>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-left">
+          <div class="funnel-step-num">02</div>
+          <div class="funnel-step-label">Конверсії (дзвінки / заявки)</div>
+        </div>
+        <div class="funnel-right">
+          <div>
+            <div class="funnel-value" id="f-conversions"></div>
+            <div class="funnel-value-label">зафіксованих конверсій</div>
+          </div>
+          <div class="funnel-meta">
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-cpl"></div>
+              <div class="funnel-meta-lab">ціна конверсії (CPL)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-arrow">
+        <span class="funnel-arrow-badge" id="f-closeArrow"></span>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-left">
+          <div class="funnel-step-num">03</div>
+          <div class="funnel-step-label">Фактичні продажі</div>
+        </div>
+        <div class="funnel-right">
+          <div>
+            <div class="funnel-value" id="f-deals"></div>
+            <div class="funnel-value-label">клієнтів купили послуги</div>
+          </div>
+          <div class="funnel-meta">
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-closeRate"></div>
+              <div class="funnel-meta-lab">close rate (заявка→продаж)</div>
+            </div>
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-notSold"></div>
+              <div class="funnel-meta-lab">заявок не стали клієнтами</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-arrow">
+        <span class="funnel-arrow-badge">↓ середній чек</span>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-left">
+          <div class="funnel-step-num">04</div>
+          <div class="funnel-step-label">Середній чек</div>
+        </div>
+        <div class="funnel-right">
+          <div>
+            <div class="funnel-value" id="f-avgCheck"></div>
+            <div class="funnel-value-label">середня вартість послуги</div>
+          </div>
+          <div class="funnel-meta">
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-avgCheckCalc"></div>
+              <div class="funnel-meta-lab">розрахунок</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-arrow">
+        <span class="funnel-arrow-badge">↓ підсумок</span>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-left">
+          <div class="funnel-step-num">05</div>
+          <div class="funnel-step-label">Загальний дохід</div>
+        </div>
+        <div class="funnel-right">
+          <div>
+            <div class="funnel-value" id="f-revenue"></div>
+            <div class="funnel-value-label">виручка з рекламного трафіку</div>
+          </div>
+          <div class="funnel-meta">
+            <div class="funnel-meta-item">
+              <div class="funnel-meta-val" id="f-roasPPC"></div>
+              <div class="funnel-meta-lab">ROAS по PPC бюджету</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">Зведені показники · SEO + PPC + Агенція</div>
+    <h2 class="section-title">Загальний ROAS і ROMI</h2>
+    <p class="section-desc">Враховано всі маркетингові витрати: рекламні бюджети + послуги агенції</p>
+    <div class="summary-block">
+      <h3>Розрахунок по всіх витратах</h3>
+      <div>
+        <div class="summary-row">
+          <span class="summary-row-label">Виручка</span>
+          <span class="summary-row-val" id="s-revenue"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Бюджет SEO</span>
+          <span class="summary-row-val" id="s-seo"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Бюджет PPC (Google Ads)</span>
+          <span class="summary-row-val" id="s-ppc"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Послуги агенції PPC</span>
+          <span class="summary-row-val" id="s-agencyPPC"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Послуги агенції SEO</span>
+          <span class="summary-row-val" id="s-agencySEO"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Всього маркетингових витрат</span>
+          <span class="summary-row-val accent" id="s-totalCost"></span>
+        </div>
+      </div>
+      <div>
+        <div class="summary-row">
+          <span class="summary-row-label">Маржинальність</span>
+          <span class="summary-row-val" id="s-margin"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">Валовий прибуток</span>
+          <span class="summary-row-val" id="s-grossProfit"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">ROAS (SEO + PPC бюджети)</span>
+          <span class="summary-row-val accent" id="s-roas"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">ROMI (всі маркетинг. витрати)</span>
+          <span class="summary-row-val" id="s-romi"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-row-label">З кожної ₴1 маркетингу повернулось</span>
+          <span class="summary-row-val accent" id="s-perHryvnia"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="container">
+    Підготовлено агенцією · Квітень 2026 · <strong>Авіцена Мед</strong> · Конфіденційно
+  </div>
+</div>
+
+<script>
+  function fmt(n) {
+    return Math.round(n).toLocaleString('uk-UA') + ' ₴';
+  }
+  function fmtN(n, dec) {
+    return n.toFixed(dec !== undefined ? dec : 0).replace('.', ',');
+  }
+  function val(id) {
+    return parseFloat(document.getElementById(id).value) || 0;
+  }
+
+  function recalc() {
+    const ppc       = val('budgetPPC');
+    const seo       = val('budgetSEO');
+    const agPPC     = val('agencyPPC');
+    const agSEO     = val('agencySEO');
+    const convs     = val('conversions');
+    const deals     = val('deals');
+    const revenue   = val('revenue');
+    const marginPct = val('margin');
+
+    const totalBudget = ppc + seo;
+    const totalAgency = agPPC + agSEO;
+    const totalCost   = totalBudget + totalAgency;
+    const cpl         = convs > 0 ? ppc / convs : 0;
+    const closeRate   = convs > 0 ? (deals / convs) * 100 : 0;
+    const avgCheck    = deals > 0 ? revenue / deals : 0;
+    const grossProfit = revenue * (marginPct / 100);
+    const roas        = totalBudget > 0 ? revenue / totalBudget : 0;
+    const roasPPC     = ppc > 0 ? revenue / ppc : 0;
+    const romi        = totalCost > 0 ? ((grossProfit - totalCost) / totalCost) * 100 : 0;
+    const perHryvnia  = totalCost > 0 ? grossProfit / totalCost : 0;
+    const notSold     = convs - deals;
+
+    document.getElementById('f-totalBudget').textContent = fmt(totalBudget);
+    document.getElementById('f-totalBudgetSub').textContent = 'Google Ads ' + fmt(ppc) + ' + SEO ' + fmt(seo);
+    document.getElementById('f-ppc').textContent = fmt(ppc);
+    document.getElementById('f-seo').textContent = fmt(seo);
+    document.getElementById('f-conversions').textContent = Math.round(convs).toLocaleString('uk-UA');
+    document.getElementById('f-cpl').textContent = fmtN(cpl, 2) + ' ₴';
+    document.getElementById('f-closeArrow').textContent = '↓ конверсія в продаж ' + fmtN(closeRate, 1) + '%';
+    document.getElementById('f-deals').textContent = Math.round(deals).toLocaleString('uk-UA');
+    document.getElementById('f-closeRate').textContent = fmtN(closeRate, 1) + '%';
+    document.getElementById('f-notSold').textContent = Math.round(notSold).toLocaleString('uk-UA') + ' із ' + Math.round(convs).toLocaleString('uk-UA');
+    document.getElementById('f-avgCheck').textContent = fmt(avgCheck);
+    document.getElementById('f-avgCheckCalc').textContent = fmt(revenue) + ' ÷ ' + Math.round(deals);
+    document.getElementById('f-revenue').textContent = fmt(revenue);
+    document.getElementById('f-roasPPC').textContent = fmtN(roasPPC, 2) + '×';
+
+    document.getElementById('s-revenue').textContent = fmt(revenue);
+    document.getElementById('s-seo').textContent = fmt(seo);
+    document.getElementById('s-ppc').textContent = fmt(ppc);
+    document.getElementById('s-agencyPPC').textContent = fmt(agPPC);
+    document.getElementById('s-agencySEO').textContent = fmt(agSEO);
+    document.getElementById('s-totalCost').textContent = fmt(totalCost);
+    document.getElementById('s-margin').textContent = fmtN(marginPct, 0) + '%';
+    document.getElementById('s-grossProfit').textContent = fmt(grossProfit);
+    document.getElementById('s-roas').textContent = fmtN(roas, 2);
+
+    const romiEl = document.getElementById('s-romi');
+    romiEl.textContent = (romi >= 0 ? '+' : '') + fmtN(romi, 1) + '%';
+    romiEl.className = 'summary-row-val ' + (romi >= 100 ? 'accent' : romi >= 0 ? 'warn' : 'danger');
+
+    document.getElementById('s-perHryvnia').textContent = '₴' + fmtN(perHryvnia, 3);
+  }
+
+  document.querySelectorAll('input').forEach(function(inp) {
+    inp.addEventListener('input', recalc);
+  });
+  recalc();
+</script>
+</body>
+</html>
